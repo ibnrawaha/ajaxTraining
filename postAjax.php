@@ -1,3 +1,27 @@
+<?php 
+	$conn = mysqli_connect('localhost','root','','cms');
+
+	if($conn){
+		echo "connection success";
+	}
+	else {
+		echo "Failed";
+		echo mysqli_connect_error() ." == " . mysqli_connect_errno();
+	}
+
+	if(!empty($_POST)){
+		$name = $_POST['name'];
+		$email = $_POST['email'];
+
+		var_dump($_POST);
+		$query  = "INSERT INTO `ajax` (`name`,`email`) VALUES  ('".$name."', '".$email."')";
+		echo $query;
+		$result  = mysqli_query($conn , $query);
+		echo $result;
+	}
+
+ ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,6 +34,8 @@
 		<input type="text" name="email" id="email" placeholder="Enter E-mail">
 		<button id="submit">Submit</button>
 	</form>
+
+	<div id="text"></div>
 	
 
 	<?php 
@@ -48,7 +74,7 @@
 			xhr.onload = function(){
 				if(xhr.status == 200){
 					// console.log(xhr.responseText);
-					document.write(xhr.responseText);
+					document.getElementById('text').innerHTML = xhr.responseText;
 					
 				}
 			};
